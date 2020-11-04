@@ -29,6 +29,7 @@ class PhoneInfo
 router.get("/submit", (req, res) => 
 {
     let phoneName=req.query.phoneName
+    console.log(phoneName);
     if(!phoneName)
     {
         return res.json(
@@ -38,18 +39,20 @@ router.get("/submit", (req, res) =>
         });
     }
 
-    let url="https://model.super202.cn/getJixingData.html?page=1&limit=15&sousuo="+phoneName;
-    httpRequest(url,function(content)
-    {
-        let js=JSON.parse(content);
-        if(js.data.length==0)
-        {
-            return;
-        }
+    // let url="https://model.super202.cn/getJixingData.html?page=1&limit=15&sousuo="+phoneName;
+    // httpRequest(url,function(content)
+    // {
+    //     let js=JSON.parse(content);
+    //     if(js.data.length==0)
+    //     {
+    //         return;
+    //     }
 
-        let data=js.data[0];
-        searchInfo(data.name);
-    },null);
+    //     let data=js.data[0];
+    //     searchInfo(data.name);
+    // },null);
+
+    searchInfo(phoneName);
 
     return res.json(
     {
@@ -459,10 +462,12 @@ function searchInfo(phoneName)
                         if(id==0)
                         {
                             insertSql("phoneprice_phoneinfo",sqlKeys,sqlValue);
+                            console.log("insert "+phone.name);
                         }
                         else
                         {
                             updateSql("phoneprice_phoneinfo",id,sqlKeys,sqlValue);
+                            console.log("update "+phone.name);
                         }
                     });
                 });
