@@ -18,4 +18,3 @@ app.all("*", function (req, res, next) {
 });
 
 app.use("/v1/blacklist",require("./blacklist/blacklist"))
-app.use("/v1/phonePrice",require("./phonePrice/phonePrice"))
